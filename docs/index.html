@@ -2,8 +2,8 @@
 <html>
 <head>
   <!-- If this is a GitHub Pages project site at https://AuroraViking.github.io/staffweb/
-       set base to "/AuroraViking/staffweb/". If you host at username.github.io, use "/" -->
-  <base href="/AuroraViking/staffweb/">
+       set base to "/staffweb/". If you host at username.github.io, use "/" -->
+  <base href="/staffweb/">
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
@@ -30,7 +30,7 @@
   <!-- GOOGLE MAPS JS API - REQUIRED FOR MAPS      -->
   <!-- ============================================ -->
   <!-- Replace MAPS_API_KEY_PLACEHOLDER at build time or set a restricted key here -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=MAPS_API_KEY_PLACEHOLDER"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=MAPS_API_KEY_PLACEHOLDER&callback=initMap" async defer loading="lazy"></script>
 
   <style>
     .loading {
@@ -70,12 +70,19 @@
   </div>
 
   <script>
+    // Hide the loading overlay when Flutter signals its first frame.
     window.addEventListener('flutter-first-frame', function() {
       const loading = document.getElementById('loading');
       if (loading) {
         loading.style.display = 'none';
       }
     });
+
+    // Provide a no-op initMap so the Google Maps API callback doesn't throw.
+    // Flutter / your app can initialize an actual map later.
+    window.initMap = function() {
+      console.log('Google Maps API loaded');
+    };
   </script>
 
   <script src="flutter_bootstrap.js" async></script>
